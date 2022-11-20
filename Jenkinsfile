@@ -62,8 +62,7 @@ pipeline {
                 sh './gradlew bootRun&'
                 //sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
                 sh 'curl -I GET http://localhost:8081/rest/mscovid/test?msg=testing > response.txt'
-                //${responseStatus}
-                sh(script: 'cat response.txt | grep HTTP/1.1 | cut -d " " -f2', returnStdout: true).trim()
+                //${responseStatus} = Corregir sh(script: 'cat response.txt | grep HTTP/1.1 | cut -d " " -f2', returnStdout: true).trim()
             }
             post {
                 success {
