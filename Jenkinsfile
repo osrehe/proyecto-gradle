@@ -24,6 +24,8 @@ pipeline {
                 //withSonarQubeEnv('sonar-public') { // If you have configured more than one global server connection, you can specify its name
                 //    sh './mvnw clean package sonar:sonar'
                 withSonarQubeEnv('Sonita') {
+                    echo '$WORKSPACE' 
+                    sh 'chmod -R 777 $WORKSPACE'
                     sh './gradlew sonarqube -Dsonar.projectKey=RemoteGradle'
                 }
             }
