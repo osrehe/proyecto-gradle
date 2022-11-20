@@ -18,5 +18,23 @@ pipeline {
                 }
             }
         }
+        stage('Sonar'){
+            steps{
+                echo 'Sonar...'
+                //withSonarQubeEnv('sonar-public') { // If you have configured more than one global server connection, you can specify its name
+                //    sh './mvnw clean package sonar:sonar'
+                }
+            }
+            post {
+                success {
+                    echo 'SONAR Success'
+                    //
+                }
+                failure {
+                    echo 'SONAR Failed'
+                    //slackSend color: "danger", message: "Sonar Failed."
+                }
+            }
+        }
      }
 }
