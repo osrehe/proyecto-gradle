@@ -1,6 +1,7 @@
 pipeline {
     agent any
-
+    def responseStatus = ''
+    
     stages {
         stage('INFO'){
             steps{
@@ -38,7 +39,7 @@ pipeline {
                 }
             }
         }
-         stage('Build'){
+        stage('BUILD'){
             steps{
                 echo 'Building...'
                 sh './gradlew build'
@@ -54,6 +55,24 @@ pipeline {
                 }
             }
         }
-
+        stage('RUN'){
+            steps{
+                echo 'Running...'
+                sh './gradlew bootRun&'
+                //sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
+                sh 'curl -I GET http://localhost:8081/rest/mscovid/test?msg=testing > response.txt'
+                responseStatus = sh(script: 'cat response.txt | grep HTTP/1.1 | cut -d " " -f2', returnStdout: true).trim()
+            }
+            post {
+                success {
+                    echo 'Running Success'
+                    //slackSend color: "good", message: "Build Success"
+                }
+                failure {
+                    echo 'Running Failed'
+                    //slackSend color: "danger", message: "Build Failed"
+                }
+            }
+        }
     }
 }
