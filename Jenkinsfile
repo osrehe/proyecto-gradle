@@ -26,7 +26,7 @@ pipeline {
                 withSonarQubeEnv('Sonita') {
                     echo '$WORKSPACE' 
                     sh 'chmod -R 777 $WORKSPACE'
-                    sh './gradlew sonarqube -Dsonar.projectKey=RemoteGradle'
+                    sh './gradlew sonarqube -Dsonar.projectKey=RemoteGradle --stacktrace --scan'
                 }
             }
             post {
