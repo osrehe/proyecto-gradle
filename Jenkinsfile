@@ -38,5 +38,22 @@ pipeline {
                 }
             }
         }
+         stage('Build'){
+            steps{
+                echo 'Building...'
+                sh './gradlew build'
+            }
+            post {
+                success {
+                    echo 'Build Success'
+                    //slackSend color: "good", message: "Build Success"
+                }
+                failure {
+                    echo 'Build Failed'
+                    //slackSend color: "danger", message: "Build Failed"
+                }
+            }
+        }
+
     }
 }
