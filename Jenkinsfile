@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-     stages {
+    stages {
         stage('INFO'){
             steps{
                 echo 'Info...'
@@ -26,7 +26,7 @@ pipeline {
             }
             post {
                 success {
-                    echo 'SONAR Success'
+                    echo 'SONAR Success' 
                     //
                 }
                 failure {
@@ -35,5 +35,5 @@ pipeline {
                 }
             }
         }
-     }
+    }
 }
